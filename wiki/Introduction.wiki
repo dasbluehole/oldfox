@@ -1,0 +1,38 @@
+#labels Featured,Phase-Design,Phase-Implementation,Phase-Deploy
+#Introduction to Oldfox.
+
+= Introduction =
+
+Oldfox is a simple tool for those who want to check from where a server is located on the face of the earth. There are several Web based services who used to show the path travailed by the mail or a server.
+
+
+= Details =
+
+This project depends on 
+  * *sqlite3* database engine
+  * *[http://www.maxmind.com Maxmind]* city level data in csv format
+
+= How to setup =
+
+The setup process is easy.
+  # get the csv files from maxmind
+  # execute the script preparemaxmind.sh
+  # install sqlite3 and sqlite3-devel
+  # from sqlite prompt execute following sql queries
+  # CREATE TABLE city_block (startip integer, endip integer, locid integer);
+  # CREATE TABLE city_loc (locid integer, country text, region text, city text, postalcode text, latitude float, longitude float, metrocode text, areacode text);
+  # Now import the 2 files which are converted in step 2 to the respective tables.
+  # compile the .c file and you are done.
+
+= Using Oldfox =
+  * To see the path to a server/ remote machine
+    # Using traceroute: use the script traceroute.sh remote_machine outputfile
+    # Using MTR: use the script mtr.sh remote_machine outputfile
+    # then execute oldfox outputfile
+
+The output will be in a tabular form showing each IP, city, region, country, latitude and longitude.
+
+= Future enhancements =
+  * Display on a world map may be through a browser( need help in this)
+
+
