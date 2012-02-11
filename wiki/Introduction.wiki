@@ -22,7 +22,7 @@ The setup process is easy.
   # CREATE TABLE city_block (startip integer, endip integer, locid integer);
   # CREATE TABLE city_loc (locid integer, country text, region text, city text, postalcode text, latitude float, longitude float, metrocode text, areacode text);
   # Now import the 2 files which are converted in step 2 to the respective tables.
-  # compile the .c file and you are done.
+  # compile the oldfox.c file( gcc -o oldfox oldfox.c -lsqlite3 ) and you are done.
 
 = Using Oldfox =
   * To see the path to a server/ remote machine
@@ -34,5 +34,3 @@ The output will be in a tabular form showing each IP, city, region, country, lat
 
 = Future enhancements =
   * Display on a world map may be through a browser( need help in this)
-
-
