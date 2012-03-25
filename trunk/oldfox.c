@@ -121,7 +121,10 @@ int main(int argc, char *argv[])
 	char ipstr[16];
 	
 	if(argc!=2)
-	usage(argv[0]);
+	{
+	    usage(argv[0]);
+	    exit(1);
+	}
 	fp=fopen(argv[1],"r");
 	if(!fp)
 	{
