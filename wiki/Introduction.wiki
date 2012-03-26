@@ -1,4 +1,4 @@
-#labels Featured,Phase-Design,Phase-Implementation,Phase-Deploy
+#labels Featured,Phase-Design,Phase-Implementation,Phase-Deploy,Phase-Support
 #Introduction to Oldfox.
 
 = Introduction =
@@ -33,4 +33,6 @@ The setup process is easy.
 The output will be in a tabular form showing each IP, city, region, country, latitude and longitude.
 
 = Future enhancements =
-  * Display on a world map may be through a browser( need help in this)
+  * ~~Display on a world map may be through a browser( need help in this) ~~ already done please check qoldfox subdirectory for it.
+
+  * please read the README.TXT of both oldfox and qoldfox for details of features needed.
