@@ -17,15 +17,9 @@ Dialog::Dialog(QWidget *parent) :
 {
     setup_database();
     ui->setupUi(this);
-    QImage img("./world5.gif");
-    if(!img.isNull())
-    {
-        myScene.addPixmap(QPixmap::fromImage(img));
-    }
-    ui->worldview->setScene(&myScene);
+    load_map();
     connect(&tracer,SIGNAL(error(QProcess::ProcessError)),this,SLOT(processError(QProcess::ProcessError)));
     connect(&tracer,SIGNAL(readyReadStandardOutput()),this,SLOT(myOutput()));
-	
 }
 
 Dialog::~Dialog()
@@ -65,6 +59,16 @@ bool is_private_ip(QString *ipstr)
     return false;
        
 }
+void Dialog::load_map()
+{
+    QImage img("./world5.gif");
+    if(!img.isNull())
+    {
+        myScene.addPixmap(QPixmap::fromImage(img));
+    }
+    ui->worldview->setScene(&myScene);
+}
+
 void Dialog::on_traceButton_clicked()
 {
     QString cmdstr;
@@ -85,6 +89,9 @@ void Dialog::on_exitButton_clicked()
 void Dialog::on_stopButton_clicked()
 {
     tracer.kill();
+    myScene.clear();
+    load_map();
+    ui->targetEdit->clear();
 }
 
 void Dialog::processError(QProcess::ProcessError err)
@@ -142,6 +149,9 @@ void Dialog::myOutput()
                 m.longitude=0;
                 //qDebug()<<model.record().count();
                 m.city.append(model.record(0).value(0).toString());
+                m.city.append('[');
+                m.city.append(model.record(0).value(3).toString());
+                m.city.append(']');
                 m.latitude=model.record(0).value(1).toFloat();
                 m.longitude=model.record(0).value(2).toFloat();
                 plotLocation(&m);
@@ -159,5 +169,9 @@ void Dialog::plotLocation(myLocation *mloc)
         p.setX(360+mloc->longitude*2);
         p.setY(180-mloc->latitude*2);
         myScene.addEllipse(p.x()-1, p.y()-1, 5.0, 5.0, mypen, QBrush(Qt::SolidPattern));
+        QGraphicsTextItem *cityText = new QGraphicsTextItem;
+        cityText->setPos(p.x(),p.y());
+        cityText->setPlainText(mloc->city);
+        myScene.addItem(cityText);
     }
 }
