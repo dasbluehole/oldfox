@@ -30,6 +30,7 @@ struct myLocation
     float latitude;
     float longitude;
     QString city;
+    //QString country;
 };
 
 class Dialog : public QDialog
@@ -55,6 +56,7 @@ private:
     void setup_database();
     QSqlError last_error(){ return db.lastError();}
     void plotLocation(struct myLocation *mloc);
+    void load_map();
 
 private slots:
     void on_traceButton_clicked();

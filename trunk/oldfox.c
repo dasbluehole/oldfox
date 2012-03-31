@@ -131,8 +131,8 @@ int main(int argc, char *argv[])
 		perror("fopen");
 		exit(1);
 	}
-	printf("IP                City            region  country   latitude  longitude\n");
-	printf("=======================================================================\n");
+	printf("IP                City            region  country   latitude  longitude     cidr\n");
+	printf("=======================================================================================\n");
 	while(!feof(fp))
 	{
 		bzero(ipstr,16);
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 		n=ip_to_num(ipstr);
 		//printf("%lu :",n);
 		loc=get_location(n);
-		printf("%-20s %-4s %-8s %f %f\n",loc->name,loc->region,loc->country,loc->latitude,loc->longitude);
+		printf("%-20s %-4s %-8s %f %f %lu\n",loc->name,loc->region,loc->country,loc->latitude,loc->longitude,n);
 		free(loc);
 	}
 	fclose(fp);
