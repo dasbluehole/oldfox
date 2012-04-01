@@ -112,6 +112,8 @@ int is_private_ip(char *ipstr)
 		return 1;
 	if(strncmp(ipstr,"192.168.",8)==0)
 		return 1;
+	if(atof(ipstr)>=172.16 && atof(ipstr)<=172.35)
+		return 1;
 	return 0;
 }	
 int main(int argc, char *argv[])
