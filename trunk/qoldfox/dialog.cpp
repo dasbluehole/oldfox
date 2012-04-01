@@ -50,12 +50,25 @@ long ip_to_num(const char *str)
 }
 bool is_private_ip(QString *ipstr)
 {
+    bool ok=0;
     if(ipstr->left(3)=="10.")
         return true;
     if(ipstr->left(4)=="127.")
         return true;
     if(ipstr->left(8)=="192.168.")
         return true;
+    if(ipstr->left(4)=="172.")
+    {
+        if(ipstr->left(7).right(1)==".")
+        {
+            QString sec_oct;
+            int sec_oct_int;
+            sec_oct.append(ipstr->left(6).right(2));
+            sec_oct_int=sec_oct.toInt(&ok,10);
+            if(sec_oct_int <= 35 && sec_oct_int >= 16)
+                return true;
+        }
+     }
     return false;
        
 }
@@ -133,7 +146,7 @@ void Dialog::myOutput()
         ipstr.append(field.last().split(")").first());
         if(is_private_ip(&ipstr))
         {
-            qDebug()<<"Private IP";
+            qDebug()<<"Private IP :"<<ipstr;
         }
         else
         {
@@ -141,7 +154,7 @@ void Dialog::myOutput()
             if(!ipstr.contains("ms") && !ipstr.contains("*")&& ipstr.length()>1)
             {
                 unsigned long cidr = ip_to_num(ipstr.toLocal8Bit());
-                //qDebug()<<ipstr<<" cidr= "<<cidr;
+                //qDebug()<<ipstr;//<<" cidr= "<<cidr;
                 model.setQuery(QString("SELECT city,latitude,longitude,country FROM city_loc WHERE locid=(SELECT locid FROM city_block WHERE startip<=%1 AND endip>=%2)").arg(cidr,0,10).arg(cidr,0,10));
                 myLocation m;
                 m.city="";
